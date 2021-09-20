@@ -16,6 +16,7 @@ type User struct {
 	Username          string     `json:"username;unique"`
 	HashedPassword    string     `json:"hashed_password"`
 	Status            UserStatus `json:"status"`
+	Fullname		  string     `json:"fullname"`
 	Email             string     `json:"email"`
 	Address 		  string     `json:"address"`
 	Nationality		  string	 `json:"nationality"`

@@ -32,6 +32,7 @@ type CreateUserParams struct {
 	Username       string            `json:"username"`
 	HashedPassword string            `json:"hashed_password"`
 	Status         model.UserStatus  `json:"status"`
+	Fullname	   string			 `json:"fullname" `
 	Email          string            `json:"email"`
 	Address        string    	 	 `json:"address"`
 	Nationality    string   		 `json:"nationality"`
@@ -49,6 +50,7 @@ func (q *userRepository) CreateUser(ctx context.Context, arg CreateUserParams) (
 			Username: arg.Username,
 			HashedPassword: arg.HashedPassword,
 			Status: arg.Status,
+			Fullname: arg.Fullname,
 			Email: arg.Email,
 			Address: arg.Address,
 			Nationality: arg.Nationality,

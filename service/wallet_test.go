@@ -483,7 +483,7 @@ func TestWalletService_PayFailSendMoney(t *testing.T) {
 
 	//line 142 we need a mock
 	mockWalletRepo.On("SendMoney", mock.Anything, mock.Anything).
-		Return(store.WalletTransferResult{}, fmt.Errorf("error"))
+		Return(store.WalletTransferResult{}, fmt.Errorf("error")).Once()
 
 	transResultDto, err := walletServiceImpl.Pay(context.Background(), dto.TransferMoneyDto{
 		FromWalletAddress: "fromWalletAddress",
@@ -622,7 +622,7 @@ func TestWalletService_UpdateWalletStatusErr(t *testing.T) {
 
 	//line 210 we need a mock
 	mockWalletRepo.On("UpdateWalletStatus", mock.Anything, mock.Anything).
-		Return(model.Wallet{}, local_errors.ErrSomethingWrong)
+		Return(model.Wallet{}, local_errors.ErrSomethingWrong).Once()
 
 	walletStatusDto, err := walletServiceImpl.UpdateWalletStatus(context.Background(), dto.UpdateWalletStatusDto{
 		WalletAddress: 	"aWallet",

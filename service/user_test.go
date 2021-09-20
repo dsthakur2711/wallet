@@ -6,11 +6,8 @@ import (
 	"github.com/dsthakur2711/wallet/model"
 	"github.com/dsthakur2711/wallet/pkg/local_errors"
 	"github.com/dsthakur2711/wallet/store/mocks"
-	"github.com/dsthakur2711/wallet/util"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
-	"github.com/stretchr/testify/require"
-	"math/rand"
 	"testing"
 )
 
@@ -18,34 +15,8 @@ var mockUserRepo= mocks.UserRepo{}
 var usererviceImpl= NewUserService(&mockUserRepo)
 
 
-var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
-func RandomString(n int) string {
-	b := make([]rune, n)
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(b)
-}
-
-//func TestUserService_CreateUserFailedOnHashPassword(t *testing.T) {
-//	// line 33 we need a mock
-//	mockWalletRepo.On("HashPassword", mock.Anything).
-//		Return("", local_errors.Err).Once()
-//
-//	userDto, err := usererviceImpl.CreateUser(context.Background(), dto.CreateUserDto{})
-//
-//	//assertion
-//	assert.Error(t, err)
-//	assert.Equal(t, dto.UserDto{}, userDto)
-//}
-
 
 func TestUserService_CreateUserFailedOnGetUserByUsername(t *testing.T) {
-	// line 33 we need a mock
-	password := RandomString(8)
-	hashedPassword1, err := util.HashPassword(password)
-	require.NoError(t, err)
-	require.NotEmpty(t, hashedPassword1)
 
 	//line 50 we need a mock
 	mockUserRepo.On("GetUserByUsername", mock.Anything, mock.Anything).
@@ -59,11 +30,6 @@ func TestUserService_CreateUserFailedOnGetUserByUsername(t *testing.T) {
 }
 
 func TestUserService_CreateUserFailedOnErrUsernameAlreadyTaken(t *testing.T) {
-	// line 33 we need a mock
-	password := RandomString(8)
-	hashedPassword1, err := util.HashPassword(password)
-	require.NoError(t, err)
-	require.NotEmpty(t, hashedPassword1)
 
 	//line 50 we need a mock
 	u := model.User{
@@ -83,11 +49,6 @@ func TestUserService_CreateUserFailedOnErrUsernameAlreadyTaken(t *testing.T) {
 }
 
 func TestUserService_CreateUserFailedOnErrSomethingWrong(t *testing.T) {
-	// line 33 we need a mock
-	password := RandomString(8)
-	hashedPassword1, err := util.HashPassword(password)
-	require.NoError(t, err)
-	require.NotEmpty(t, hashedPassword1)
 
 	//line 50 we need a mock
 	mockUserRepo.On("GetUserByUsername", mock.Anything, mock.Anything).
@@ -106,11 +67,6 @@ func TestUserService_CreateUserFailedOnErrSomethingWrong(t *testing.T) {
 
 
 func TestUserService_CreateUserSuccess(t *testing.T) {
-	// line 33 we need a mock
-	password := RandomString(8)
-	hashedPassword1, err := util.HashPassword(password)
-	require.NoError(t, err)
-	require.NotEmpty(t, hashedPassword1)
 
 	//line 50 we need a mock
 	mockUserRepo.On("GetUserByUsername", mock.Anything, mock.Anything).
@@ -131,4 +87,17 @@ func TestUserService_CreateUserSuccess(t *testing.T) {
 	//assertion
 	assert.Nil(t, err)
 	assert.Equal(t, dto.NewUserDto(u), userDto)
+}
+
+func TestUserService_LoginUserFailedOnGetUserByUsername(t *testing.T) {
+
+	//line 74 we need a mock
+	mockUserRepo.On("GetUserByUsername", mock.Anything, mock.Anything).
+		Return(model.User{}, local_errors.Err).Once()
+
+	loggedInDto, err := usererviceImpl.LoginUser(context.Background(), dto.LoginCredentialsDto{})
+
+	//assertion
+	assert.NotNil(t, err)
+	assert.Equal(t, dto.LoggedInUserDto{}, loggedInDto)
 }

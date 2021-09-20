@@ -97,35 +97,35 @@ func TestWalletRepository_CreateWalletFailOnErrUserNotFound(t *testing.T) {
 
 
 var mocktransRepo= 	mocks.TransRepo{}
-func TestWalletRepository_SendMoneyFailOnCreateTransfer(t *testing.T) {
-	walletRepoImpl := InitWalletRepo(t)
-
-	//line 160 we need a mock
-	mocktransRepo.On("CreateTransfer", mock.Anything, mock.Anything).
-		Return(model.Trans{}, local_errors.ErrSomethingWrong).Once()
-
-	walletTransferResult, err := walletRepoImpl.SendMoney(context.Background(), store.SendMoneyParams{})
-
-	//assertion
-	assert.Error(t, local_errors.ErrUserNotFound, err)
-	assert.Equal(t, store.WalletTransferResult{}, walletTransferResult)
-}
-
-func TestWalletRepository_SendMoneyFailOnAddMoney(t *testing.T) {
-		walletRepoImpl := InitWalletRepo(t)
-
-		//line 160 we need a mock
-		mocktransRepo.On("CreateTransfer", mock.Anything, mock.Anything).
-			Return(model.Trans{}, nil).Once()
-
-		//line 169 we need a mock
-
-		walletTransferResult, err := walletRepoImpl.SendMoney(context.Background(), store.SendMoneyParams{})
-
-		//assertion
-		assert.Error(t, local_errors.ErrUserNotFound, err)
-		assert.Equal(t, store.WalletTransferResult{}, walletTransferResult)
-}
+//func TestWalletRepository_SendMoneyFailOnCreateTransfer(t *testing.T) {
+//	walletRepoImpl := InitWalletRepo(t)
+//
+//	//line 160 we need a mock
+//	mocktransRepo.On("CreateTransfer", mock.Anything, mock.Anything).
+//		Return(model.Trans{}, local_errors.ErrSomethingWrong).Once()
+//
+//	walletTransferResult, err := walletRepoImpl.SendMoney(context.Background(), store.SendMoneyParams{})
+//
+//	//assertion
+//	assert.Error(t, local_errors.ErrUserNotFound, err)
+//	assert.Equal(t, store.WalletTransferResult{}, walletTransferResult)
+//}
+//
+//func TestWalletRepository_SendMoneyFailOnAddMoney(t *testing.T) {
+//		walletRepoImpl := InitWalletRepo(t)
+//
+//		//line 160 we need a mock
+//		mocktransRepo.On("CreateTransfer", mock.Anything, mock.Anything).
+//			Return(model.Trans{}, nil).Once()
+//
+//		//line 169 we need a mock
+//
+//		walletTransferResult, err := walletRepoImpl.SendMoney(context.Background(), store.SendMoneyParams{})
+//
+//		//assertion
+//		assert.Error(t, local_errors.ErrUserNotFound, err)
+//		assert.Equal(t, store.WalletTransferResult{}, walletTransferResult)
+//}
 
 func TestWalletRepository_AddWalletBalanceErrSomethingWrong(t *testing.T) {
 	walletRepoImpl := InitWalletRepo(t)

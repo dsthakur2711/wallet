@@ -39,6 +39,7 @@ func (u *userService) CreateUser(ctx context.Context, createUserDto dto.CreateUs
 		Id:             createUserDto.ID,
 		Username:       createUserDto.Username,
 		HashedPassword: hashedPassword,
+		Fullname:		createUserDto.Fullname,
 		Email:          createUserDto.Email,
 		Status:         model.UserStatusACTIVE,
 		Address:        createUserDto.Address,
@@ -80,13 +81,7 @@ func (u *userService) LoginUser(ctx context.Context, loginCredentialsDto dto.Log
 		return loggedInDto, local_errors.ErrIncorrectPassword
 	}
 
-	//accessToken, err := u.tokenMaker.CreateToken(user.ID, constant.AccessTokenDuration)
-	//if err != nil {
-	//	return loggedInDto, err
-	//}
-
 	loggedInDto = dto.LoggedInUserDto{
-		//AccessToken: accessToken,
 		User:        dto.NewUserDto(user),
 	}
 

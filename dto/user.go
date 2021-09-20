@@ -6,10 +6,11 @@ import (
 )
 
 type CreateUserDto struct {
-	ID		 		int64 `json:"id" `
-	Username 		string `json:"username" validate:"required,alphanum"`
-	Password 		string `json:"password" validate:"required,min=6"`
-	Email    		string `json:"email" validate:"required,email"`
+	ID		 		int64 		`json:"id" `
+	Username 		string 		`json:"username" validate:"required,alphanum"`
+	Password 		string 		`json:"password" validate:"required,min=6"`
+	Fullname 		string 		`json:"fullname" validate:"required"`
+	Email    		string	    `json:"email" validate:"required,email"`
 	Address           string    `json:"address" `
 	Nationality       string    `json:"nationality" `
 	AadharNo          string    `json:"aadhar_no" `
@@ -19,6 +20,7 @@ type UserDto struct {
 	ID                int64     `json:"id"`
 	Username          string    `json:"username" validate:"required,alphanum"`
 	Status            string    `json:"status"`
+	Fullname		  string    `json:"fullname" validate:"required" `
 	Email             string    `json:"email" validate:"required,email"`
 	Address           string    `json:"address" `
 	Nationality       string    `json:"nationality" `
@@ -43,6 +45,7 @@ func NewUserDto(user model.User) UserDto {
 		ID:                user.ID,
 		Username:          user.Username,
 		Status:            string(user.Status),
+		Fullname:		   user.Fullname,
 		Email:             user.Email,
 		Address: 		   user.Address,
 		Nationality:       user.Nationality,
